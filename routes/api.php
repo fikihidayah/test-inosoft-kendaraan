@@ -25,7 +25,24 @@ Route::prefix('auth')->group(function () {
     Route::get('refresh', 'AuthController@refresh');
 });
 
+
 // use auth:api to protect unauthenticated user with jwt
-Route::prefix('users')->middleware('auth:api')->group(function () {
-    Route::get('/me', 'UserController@me');
+Route::middleware('auth:api')->group(function () {
+    Route::prefix('users')->group(function () {
+        Route::get('/me', 'UserController@me');
+    });
+
+    Route::resource('kendaraan/motor', 'Kendaraan\MotorController');
+    Route::prefix('kendaraan/motor')->namespace('Kendaraan')->group(function () {
+        Route::put('/{motor}/stok', 'MotorController@updateStok');
+        Route::get('/{motor}/stok', 'MotorController@getStok');
+    });
+
+    Route::resource('kendaraan/mobil', 'Kendaraan\MobilController');
+    Route::prefix('kendaraan/mobil')->namespace('Kendaraan')->group(function () {
+        Route::put('/{mobil}/stok', 'MobilController@updateStok');
+        Route::get('/{mobil}/stok', 'MobilController@getStok');
+    });
+
+    Route::resource('sale', 'SaleController')->except(['update', 'create']);
 });

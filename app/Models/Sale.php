@@ -1,31 +1,28 @@
 <?php
 
-namespace App\Models\Kendaraan;
+namespace App\Models;
 
-use App\Models\Kendaraan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class Mobil extends Model
+class Sale extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'kendaraan_id',
-        'mesin',
-        'kapasitas_penumpang',
-        'tipe',
+        'jumlah',
+        'total_harga',
     ];
 
     protected $casts = [
         'kendaraan_id' => 'string',
-        'mesin' => 'string',
-        'kapasitas_penumpang' => 'integer',
-        'tipe' => 'string',
+        'jumlah' => 'integer',
+        'total_harga' => 'integer',
     ];
 
     public function kendaraan()
     {
-        return $this->belongsTo(Kendaraan::class);
+        return $this->hasMany(Kendaraan::class);
     }
 }

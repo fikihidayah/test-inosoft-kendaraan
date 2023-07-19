@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -36,6 +38,46 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (ValidationException $e, $request) {
+            if ($request->is('api/*')) {
+                return response([
+                    'status' => 422,
+                    'message' => 'Data yang diberikan tidak valid',
+                    'errors' => $e->errors(),
+                ], 422);
+            }
+        });
+
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+
+            if ($request->is('api/*')) {
+                $message = 'Data yang kamu cari tidak ditemukan';
+
+                if ($request->method() == 'PUT') {
+                    $message = 'Data yang kamu ingin rubah tidak ditemukan!';
+                }
+
+                if ($request->method() == 'DELETE') {
+                    $message = 'Data yang kamu ingin hapus tidak ditemukan!';
+                }
+
+                return response()->json([
+                    'status' => 404,
+                    'message' => $message,
+                ], 404);
+            }
+        });
+
+        $this->renderable(function (\Exception $e, $request) {
+
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'status' => 500,
+                    'message' => $e->getMessage(),
+                ], 500);
+            }
         });
     }
 }

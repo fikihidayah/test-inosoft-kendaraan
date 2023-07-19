@@ -17,6 +17,7 @@ class CreateKendaraansTable extends Migration
             $table->integer('tahun_keluaran');
             $table->string('warna');
             $table->integer('harga');
+            $table->integer('stok');
             $table->timestamps();
         });
     }
