@@ -19,7 +19,7 @@
 
 ### Jika sudah clone repository ini ke dalam server atau local komputernya dan lakukan langkah-langkah berikut
 
-1. Duplikat file `.env-example` pada root directory
+1. Duplikat file `.env-example` pada root directory dan beri nama `.env`
 2. ketikkan `composer install` untuk menginstall package laravel dan library lainnya
 3. ketikan `php artisan key:generate` pada terminal generate key app laravel
 4. ketikkan `php artisan jwt:secret` pada terimal untuk mengenerate secret key JsonWebToken
