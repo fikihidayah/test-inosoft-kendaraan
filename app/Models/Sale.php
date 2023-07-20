@@ -23,6 +23,6 @@ class Sale extends Model
 
     public function kendaraan()
     {
-        return $this->hasMany(Kendaraan::class);
+        return $this->belongsTo(Kendaraan::class);
     }
 }

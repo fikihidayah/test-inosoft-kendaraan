@@ -7,7 +7,7 @@ use App\Models\User;
 
 class UserRepository implements UserInterface
 {
-  public function store(array $data): array
+  public function store(array $data): User
   {
     return User::create($data);
   }

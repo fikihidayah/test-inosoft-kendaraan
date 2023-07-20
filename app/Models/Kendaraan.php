@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Kendaraan\Mobil;
 use App\Models\Kendaraan\Motor;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\Model;
@@ -24,8 +25,13 @@ class Kendaraan extends Model
         'stok' => 'integer',
     ];
 
-    public function motors()
+    public function motor()
     {
-        $this->hasMany(Motor::class);
+        return $this->hasOne(Motor::class);
+    }
+
+    public function mobil()
+    {
+        return $this->hasOne(Mobil::class);
     }
 }

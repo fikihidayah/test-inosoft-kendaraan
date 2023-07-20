@@ -26,9 +26,15 @@ class SaleController extends Controller
         ]);
     }
 
+    public function show(Sale $sale)
+    {
+        return response()->json([
+            'status' => 200,
+            'data' => $this->sale->getOne($sale),
+        ]);
+    }
 
-    // Problem saat get data, kendaraan
-    // Task sisa, membuat fitur penjualan, laporan dan unit test
+
     public function store(StoreRequest $request)
     {
         $id = $request->input('kendaraan_id');
@@ -39,14 +45,14 @@ class SaleController extends Controller
         ];
 
         if ($request->input('tipe') == 'mobil') {
-            $mobil = $this->mobil->findById($id);
+            $mobil = $this->mobil->findByIdKendaraan($id);
             $stok = $mobil->kendaraan->stok - 1;
             $this->mobil->updateStok($mobil, $stok);
         }
 
         if ($request->input('tipe') == 'motor') {
-            $motor = $this->motor->findById($id);
-            $stok = $motor->kendaraan->stok + 1;
+            $motor = $this->motor->findByIdKendaraan($id);
+            $stok = $motor->kendaraan->stok - 1;
             $this->motor->updateStok($motor, $stok);
         }
 
@@ -54,7 +60,7 @@ class SaleController extends Controller
             'status' => 201,
             'message' => 'Berhasil menambahan transaksi penjualan!',
             'data' => $this->sale->create($data),
-        ]);
+        ], 201);
     }
 
     public function destroy(Sale $sale)

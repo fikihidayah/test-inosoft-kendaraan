@@ -108,8 +108,10 @@ class MotorRepository implements MotorInterface
     return Motor::with('kendaraan:id,stok')->select(['mesin', 'tipe_suspensi', 'kendaraan_id'])->find($id);
   }
 
-  public function findById(string $id): Motor
+  public function findByIdKendaraan(string $id): Motor
   {
-    return Motor::with('kendaraan')->findOrFail($id);
+    return Motor::with('kendaraan')->whereHas('kendaraan', function ($query) use ($id) {
+      return $query->findOrFail($id);
+    })->first();
   }
 }

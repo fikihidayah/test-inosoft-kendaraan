@@ -108,8 +108,10 @@ class MobilRepository implements MobilInterface
     return Mobil::with('kendaraan:id,stok')->select(['mesin', 'kapasitas_penumpang', 'kendaraan_id'])->find($id);
   }
 
-  public function findById(string $id): Mobil
+  public function findByIdKendaraan(string $id): Mobil
   {
-    return Mobil::with('kendaraan')->findOrFail($id);
+    return Mobil::with('kendaraan')->whereHas('kendaraan', function ($query) use ($id) {
+      return $query->findOrFail($id);
+    })->first();
   }
 }

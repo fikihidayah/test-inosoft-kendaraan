@@ -11,4 +11,5 @@ interface SaleInterface
   public function create(array $data): Sale;
   public function getOne(Sale $sale): Sale;
   public function delete(Sale $data): bool;
+  public function filter(array $data): Collection;
 }

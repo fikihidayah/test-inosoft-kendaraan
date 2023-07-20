@@ -14,5 +14,5 @@ interface MobilInterface
   public function delete(Mobil $data): bool;
   public function updateStok(Mobil $data, int $stok): string;
   public function getStok(string $id): Mobil;
-  public function findById(string $id): Mobil;
+  public function findByIdKendaraan(string $id): Mobil;
 }

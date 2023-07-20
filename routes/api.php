@@ -18,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::get('/', function () {
+    return response()->json([
+        'status' => 200,
+        'message' => 'Selamat datang di aplikasi sistem penjualan kendaraan berbasis REST API'
+    ]);
+});
+
 Route::prefix('auth')->group(function () {
     Route::post('login', 'AuthController@login');
     Route::post('register', 'AuthController@register');
@@ -44,5 +51,6 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/{mobil}/stok', 'MobilController@getStok');
     });
 
-    Route::resource('sale', 'SaleController')->except(['update', 'create']);
+    Route::resource('sale', 'SaleController')->except(['update', 'edit', 'create']);
+    Route::post('laporan', 'LaporanController');
 });

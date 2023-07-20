@@ -14,5 +14,5 @@ interface MotorInterface
   public function delete(Motor $data): bool;
   public function updateStok(Motor $data, int $stok): string;
   public function getStok(string $id): Motor;
-  public function findById(string $id): Motor;
+  public function findByIdKendaraan(string $id): Motor;
 }
